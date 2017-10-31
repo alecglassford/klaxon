@@ -8,4 +8,12 @@ namespace :check do
     Change.check
   end
 
+  desc "Do check:all, but on a 10 minute loop (hacky substitute for cron)"
+  task loop: :environment do
+    loop do
+      Pollpage.perform_all
+      Change.check
+      sleep(10.minutes)
+    end
+  end
 end

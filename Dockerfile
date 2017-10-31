@@ -16,4 +16,8 @@ ENV RACK_ENV "production"
 ENV RAILS_ENV "production"
 
 EXPOSE 3000
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+# Redirecting output to nothing because ...
+# ... I'm on the Zeit Now free plan which makes logs public
+# Remove them if you can. Nice to have logs.
+CMD bundle exec rake check:loop > /dev/null 2>&1 & \
+  bundle exec puma -C config/puma.rb > /dev/null 2>&1
